@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "561075500896",
+    "project_id": "hitgaming-24b7f",
+    "storage_bucket": "hitgaming-24b7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561075500896:android:d8e19b0296067a22525005",
+        "android_client_info": {
+          "package_name": "com.example.hitgaming"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKzZEfePQj92ml8k4PE_h9kRnlMULaJq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
