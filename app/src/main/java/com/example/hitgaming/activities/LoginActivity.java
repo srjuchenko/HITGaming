@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerButton;
 
     private FirebaseDB db = FirebaseDB.getInstance();
-    private User user;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,9 @@ public class LoginActivity extends AppCompatActivity {
                             passField.setText("");
                             emailField.setText("");
 
-
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            User user = new User(email, currentUser.getUid());
+                            db.addUser(user);
                         } else {
                             Toast.makeText(getApplicationContext(), "Reg Failure", Toast.LENGTH_SHORT).show();
                             passField.setText("");
@@ -84,10 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
-                            user = new User(email, currentUser.getUid());
+                            currentUser = new User(email, mAuth.getCurrentUser().getUid());
 
-                            db.addUser(user);
                         } else {
                             Toast.makeText(getApplicationContext(), "Login Failure", Toast.LENGTH_SHORT).show();
                             passField.setText("");
