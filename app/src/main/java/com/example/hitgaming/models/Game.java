@@ -6,8 +6,11 @@ public class Game {
     private String imageURL;
     private float rating;
 
-    public Game(String gameName) {
+    public Game(String gameName, String releaseDate, String imageURL, float rating) {
         this.gameName = gameName;
+        this.releaseDate = releaseDate;
+        this.imageURL = imageURL;
+        this.rating = rating;
     }
 
     public String getGameName() {
