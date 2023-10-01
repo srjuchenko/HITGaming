@@ -27,26 +27,20 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private Button registerButton;
 
-    private FirebaseDB db = FirebaseDB.getInstance();
-    private User currentUser;
+    private FirebaseDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        emailField = findViewById(R.id.input_email);
-        passField = findViewById(R.id.input_password);
-        loginButton = findViewById(R.id.btn_login);
-        registerButton = findViewById(R.id.btn_register);
+        initFields();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailField.getText().toString();
                 String password = passField.getText().toString();
-
                 if (email.isEmpty() || password.isEmpty()) return;
                 regFunc(email, password);
             }
@@ -62,23 +56,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     public void regFunc(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Reg Success", Toast.LENGTH_SHORT).show();
-                            passField.setText("");
-                            emailField.setText("");
+                            showToast("Reg Success");
+                            clearInputs();
 
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             User user = new User(email, currentUser.getUid());
                             db.addUser(user);
                         } else {
-                            Toast.makeText(getApplicationContext(), "Reg Failure", Toast.LENGTH_SHORT).show();
-                            passField.setText("");
-                            emailField.setText("");
+                            showToast("Reg Failure");
+                            clearInputs();
                         }
                     }
                 });
@@ -90,9 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Login Success", Toast.LENGTH_SHORT).show();
-                            currentUser = new User(email, mAuth.getCurrentUser().getUid());
-
+                            showToast("Login Success");
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
 
@@ -100,13 +91,28 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Login Failure", Toast.LENGTH_SHORT).show();
-                            passField.setText("");
-                            emailField.setText("");
+                            showToast("Login Failure");
+                            clearInputs();
                         }
                     }
                 });
     }
 
+    private void initFields() {
+        db = FirebaseDB.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        emailField = findViewById(R.id.input_email);
+        passField = findViewById(R.id.input_password);
+        loginButton = findViewById(R.id.btn_login);
+        registerButton = findViewById(R.id.btn_register);
+    }
 
+    private void clearInputs() {
+        passField.setText("");
+        emailField.setText("");
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 }

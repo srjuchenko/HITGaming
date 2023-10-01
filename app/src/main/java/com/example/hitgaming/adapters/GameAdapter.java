@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.hitgaming.R;
 import com.example.hitgaming.models.Game;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder> {
-    private List<Game> gameList; // Replace 'Game' with your actual game model class
+    private List<Game> gameList;
     private Context context;
 
     public GameAdapter(Context context, List<Game> gameList) {
@@ -35,19 +37,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
     public void onBindViewHolder(GameViewHolder holder, int position) {
         Game game = gameList.get(position);
 
-        // Bind game data to the ViewHolder views
         holder.gameTitleTextView.setText(game.getGameName());
 
-        // Load game image using Glide or another image loading library
+
         Glide.with(context)
                 .load(game.getImageURL())
                 .into(holder.gameImageView);
 
-        // Add click listener if needed
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle item click (e.g., show game details)
+                // TODO show the game details fragment!!!
+                System.out.println("the item was clicked" + game);
             }
         });
     }
