@@ -1,7 +1,6 @@
 package com.example.hitgaming.fragments;
 
 
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,15 +28,13 @@ public class ResultsFragment extends Fragment {
     public ResultsFragment() {
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_results, container, false);
 
+        // creating a dummy data
         Game game1 = new Game("game" ,"2012", Constants.IMG_URL, 4.2f);
-
-
         for (int i=0; i<20; i++) {
             gameList.add(game1);
         }
@@ -45,8 +42,6 @@ public class ResultsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.games_items_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         gameAdapter = new GameAdapter(getActivity(), gameList);
-
-
         recyclerView.setAdapter(gameAdapter);
         return view;
     }
