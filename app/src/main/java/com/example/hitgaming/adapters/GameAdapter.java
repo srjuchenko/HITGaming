@@ -48,7 +48,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO show the game details fragment!!!
+                // TODO show the game details activity!!!
                 System.out.println("the item was clicked" + game.getName());
             }
         });
