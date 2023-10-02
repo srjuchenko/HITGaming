@@ -47,9 +47,7 @@ public class GameResult {
     @SerializedName("image")
     @Expose
     private Image image;
-    @SerializedName("image_tags")
-    @Expose
-    private List<ImageTag> imageTags;
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -168,14 +166,6 @@ public class GameResult {
 
     public void setImage(Image image) {
         this.image = image;
-    }
-
-    public List<ImageTag> getImageTags() {
-        return imageTags;
-    }
-
-    public void setImageTags(List<ImageTag> imageTags) {
-        this.imageTags = imageTags;
     }
 
     public String getName() {
