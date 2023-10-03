@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.hitgaming.MainActivity;
 import com.example.hitgaming.R;
 import com.example.hitgaming.models.User;
 import com.example.hitgaming.services.FirebaseDB;
@@ -26,16 +25,17 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passField;
     private Button loginButton;
     private Button registerButton;
-
     private FirebaseDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initFields();
+        setListeners();
+    }
 
+    private void setListeners() {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void regFunc(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)

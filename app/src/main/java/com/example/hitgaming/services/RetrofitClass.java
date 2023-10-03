@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClass {
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://www.giantbomb.com/api/";
+    private static String BASE_URL = "https://api.rawg.io/api/";
 
     public static GameDataService getService(){
         if (retrofit == null){

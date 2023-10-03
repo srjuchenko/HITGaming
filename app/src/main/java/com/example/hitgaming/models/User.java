@@ -3,10 +3,15 @@ package com.example.hitgaming.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Result;
+
 public class User {
     private String userEmail;
     private String userId;
-    private List<Game> favoriteGames;
+    private ArrayList<String> favoriteGames;
+
+    public User() {
+    }
 
     public User(String userEmail, String userId) {
         this.userEmail = userEmail;
@@ -30,15 +35,15 @@ public class User {
         this.userId = userId;
     }
 
-    public List<Game> getFavoriteGames() {
+    public ArrayList<String> getFavoriteGames() {
         return favoriteGames;
     }
 
-    public void setFavoriteGames(List<Game> favoriteGames) {
+    public void setFavoriteGames(ArrayList<String> favoriteGames) {
         this.favoriteGames = favoriteGames;
     }
 
-    public void addGameToFavorites(Game game) {
+    public void addGameToFavorites(String game) {
         this.favoriteGames.add(game);
     }
 

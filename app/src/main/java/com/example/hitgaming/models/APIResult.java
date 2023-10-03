@@ -1,101 +1,146 @@
 package com.example.hitgaming.models;
 
+import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 @Generated("jsonschema2pojo")
 public class APIResult {
 
-    @SerializedName("error")
+    @SerializedName("count")
     @Expose
-    private String error;
-    @SerializedName("limit")
+    private Integer count;
+    @SerializedName("next")
     @Expose
-    private Integer limit;
-    @SerializedName("offset")
+    private String next;
+    @SerializedName("previous")
     @Expose
-    private Integer offset;
-    @SerializedName("number_of_page_results")
-    @Expose
-    private Integer numberOfPageResults;
-    @SerializedName("number_of_total_results")
-    @Expose
-    private Integer numberOfTotalResults;
-    @SerializedName("status_code")
-    @Expose
-    private Integer statusCode;
+    private Object previous;
     @SerializedName("results")
     @Expose
-    private List<GameResult> gameResults;
-    @SerializedName("version")
+    private List<GameResult> results;
+    @SerializedName("seo_title")
     @Expose
-    private String version;
+    private String seoTitle;
+    @SerializedName("seo_description")
+    @Expose
+    private String seoDescription;
+    @SerializedName("seo_keywords")
+    @Expose
+    private String seoKeywords;
+    @SerializedName("seo_h1")
+    @Expose
+    private String seoH1;
+    @SerializedName("noindex")
+    @Expose
+    private Boolean noindex;
+    @SerializedName("nofollow")
+    @Expose
+    private Boolean nofollow;
+    @SerializedName("description")
+    @Expose
+    private String description;
 
-    public String getError() {
-        return error;
+    @SerializedName("nofollow_collections")
+    @Expose
+    private List<String> nofollowCollections;
+
+    public Integer getCount() {
+        return count;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public Integer getLimit() {
-        return limit;
+    public String getNext() {
+        return next;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setNext(String next) {
+        this.next = next;
     }
 
-    public Integer getOffset() {
-        return offset;
+    public Object getPrevious() {
+        return previous;
     }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public Integer getNumberOfPageResults() {
-        return numberOfPageResults;
-    }
-
-    public void setNumberOfPageResults(Integer numberOfPageResults) {
-        this.numberOfPageResults = numberOfPageResults;
-    }
-
-    public Integer getNumberOfTotalResults() {
-        return numberOfTotalResults;
-    }
-
-    public void setNumberOfTotalResults(Integer numberOfTotalResults) {
-        this.numberOfTotalResults = numberOfTotalResults;
-    }
-
-    public Integer getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
+    public void setPrevious(Object previous) {
+        this.previous = previous;
     }
 
     public List<GameResult> getResults() {
-        return gameResults;
+        return results;
     }
 
-    public void setResults(List<GameResult> gameResults) {
-        this.gameResults = gameResults;
+    public void setResults(List<GameResult> results) {
+        this.results = results;
     }
 
-    public String getVersion() {
-        return version;
+    public String getSeoTitle() {
+        return seoTitle;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setSeoTitle(String seoTitle) {
+        this.seoTitle = seoTitle;
+    }
+
+    public String getSeoDescription() {
+        return seoDescription;
+    }
+
+    public void setSeoDescription(String seoDescription) {
+        this.seoDescription = seoDescription;
+    }
+
+    public String getSeoKeywords() {
+        return seoKeywords;
+    }
+
+    public void setSeoKeywords(String seoKeywords) {
+        this.seoKeywords = seoKeywords;
+    }
+
+    public String getSeoH1() {
+        return seoH1;
+    }
+
+    public void setSeoH1(String seoH1) {
+        this.seoH1 = seoH1;
+    }
+
+    public Boolean getNoindex() {
+        return noindex;
+    }
+
+    public void setNoindex(Boolean noindex) {
+        this.noindex = noindex;
+    }
+
+    public Boolean getNofollow() {
+        return nofollow;
+    }
+
+    public void setNofollow(Boolean nofollow) {
+        this.nofollow = nofollow;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public List<String> getNofollowCollections() {
+        return nofollowCollections;
+    }
+
+    public void setNofollowCollections(List<String> nofollowCollections) {
+        this.nofollowCollections = nofollowCollections;
     }
 
 }

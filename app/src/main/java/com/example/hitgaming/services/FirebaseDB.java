@@ -2,6 +2,11 @@ package com.example.hitgaming.services;
 
 
 import com.example.hitgaming.models.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseDB {
@@ -22,10 +27,36 @@ public class FirebaseDB {
         db.collection("usersDB")
                 .document(user.getUserId())
                 .set(user);
-
-        System.out.println("the user: " + user + " was added successfully");
-
     }
+
+    public void getFavoriteGamesByUID(String uid
+            , final OnSuccessListener<DocumentSnapshot> onSuccessListener
+            , final OnFailureListener onFailureListener) {
+        db.collection("usersDB")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void addGameToFavorites(String uid, String gameName, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+        DocumentReference userRef = db.collection("usersDB").document(uid);
+
+        // Use FieldValue.arrayUnion to add the gameId to the favorites array
+        userRef.update("favoriteGames", FieldValue.arrayUnion(gameName))
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
+    public void removeGameFromFavorites(String uid, String gameName, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+        DocumentReference userRef = db.collection("usersDB").document(uid);
+
+        // Use FieldValue.arrayRemove to remove the gameId from the favorites array
+        userRef.update("favoriteGames", FieldValue.arrayRemove(gameName))
+                .addOnSuccessListener(onSuccessListener)
+                .addOnFailureListener(onFailureListener);
+    }
+
 
 
 }
