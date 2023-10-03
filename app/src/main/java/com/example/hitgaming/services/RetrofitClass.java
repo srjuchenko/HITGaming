@@ -18,4 +18,5 @@ public class RetrofitClass {
         return retrofit.create(GameDataService.class);
 
     }
+
 }
