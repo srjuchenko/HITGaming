@@ -4,13 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.hitgaming.R;
@@ -26,7 +31,7 @@ import java.util.ArrayList;
 public class GameDetailsActivity extends AppCompatActivity {
 
     private TextView name;
-
+    private VideoView videoView;
     private TextView release;
     private ImageView img;
     private RatingBar rate;
@@ -44,10 +49,28 @@ public class GameDetailsActivity extends AppCompatActivity {
         initFields();
         updateUI();
         setListeners();
+        addVideo();
+
+
 
     }
 
+    private void addVideo() {
+        Uri videoUrl = Uri.parse("https://steamcdn-a.akamaihd.net/steam/apps/256693661/movie480.mp4");
+        videoView.setVideoURI(videoUrl);
+        MediaController mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
 
+
+        // Listen for the video to be prepared and disable subtitles.
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.getTrackInfo();
+                mediaPlayer.setOnTimedTextListener(null); // Disable subtitles
+            }});
+    }
 
     private void setListeners() {
         shareBtn.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +154,10 @@ public class GameDetailsActivity extends AppCompatActivity {
         release = findViewById(R.id.txt_release_date);
         shareBtn = findViewById(R.id.btn_share);
         favoritesBtn = findViewById(R.id.btn_favorites);
+        videoView = findViewById(R.id.video);
         updateUserFavorites();
+
+
     }
 
     private void updateUI() {

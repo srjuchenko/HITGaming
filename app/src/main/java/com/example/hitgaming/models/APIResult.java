@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 @Generated("jsonschema2pojo")
 public class APIResult {
-
     @SerializedName("count")
     @Expose
     private Integer count;
