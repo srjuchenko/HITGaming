@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GameDataService {
-    @GET("games/")
-    Call<APIResult> getResults(@Query("api_key") String apiKey, @Query("format") String jsonName);
+    @GET("games")
+    Call<APIResult> getResults(@Query("key") String apiKey, @Query("page_size") int pageSize);
 }

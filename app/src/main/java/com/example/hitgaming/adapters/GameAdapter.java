@@ -1,6 +1,7 @@
 package com.example.hitgaming.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.hitgaming.R;
-import com.example.hitgaming.models.Game;
+import com.example.hitgaming.activities.GameDetailsActivity;
 import com.example.hitgaming.models.GameResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -42,14 +41,23 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
 
 
         Glide.with(context)
-                .load(game.getImage().getOriginalUrl())
+                .load(game.getBackgroundImage())
                 .into(holder.gameImageView);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO show the game details activity!!!
-                System.out.println("the item was clicked" + game.getName());
+                Intent intent = new Intent(context, GameDetailsActivity.class);
+
+                // Pass any relevant data to the GameDetailsActivity using Intent extras
+                intent.putExtra("gameName", game.getName()); // Example: Pass the game ID
+                intent.putExtra("gameImg", game.getBackgroundImage());
+                intent.putExtra("gameRating", game.getRating().toString());
+                intent.putExtra("gameRelease", game.getReleased());
+
+
+                // Start the GameDetailsActivity
+                context.startActivity(intent);
             }
         });
     }
