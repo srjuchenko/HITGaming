@@ -42,14 +42,15 @@ You can find the documentation for the RAWG API [here](https://rawg.io/apidocs).
 ### Games result 
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/2bd08b1d-2b7f-4529-8c76-0bc09681a6bf)
 
+### Show game by genre
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/f4249f21-4215-43f7-b0de-85d9a080a62d)
+
 ### Game details
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e886339d-458a-4eea-ab63-bdae52945f28)
 
 ### Game details with description
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e0705a1a-a050-4c3f-b770-0ead9a3fbcc4)
 
-### Show game by genre
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/f4249f21-4215-43f7-b0de-85d9a080a62d)
 
 
 
