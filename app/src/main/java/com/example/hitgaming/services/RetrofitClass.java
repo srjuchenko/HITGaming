@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClass {
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://api.rawg.io/api/";
+    private static final String BASE_URL = "https://api.rawg.io/api/";
 
     public static GameDataService getService(){
         if (retrofit == null){
@@ -28,6 +28,17 @@ public class RetrofitClass {
         }
 
         return retrofit.create(GameMovieServiceByID.class);
+    }
+
+    public static GameInfoServiceByID getGameInfo() {
+        if (retrofit == null){
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit.create(GameInfoServiceByID.class);
     }
 
 }

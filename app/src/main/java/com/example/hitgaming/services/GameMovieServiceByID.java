@@ -9,6 +9,6 @@ import retrofit2.http.Query;
 
 public interface GameMovieServiceByID {
     @GET("games/{id}/movies")
-    Call<APIResult> getResults(@Path("id") int id, @Query("key") String apiKey);
+    Call<APIResult> getResults(@Path("id") String id, @Query("key") String apiKey);
 }
 

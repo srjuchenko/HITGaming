@@ -54,7 +54,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
                 intent.putExtra("gameImg", game.getBackgroundImage());
                 intent.putExtra("gameRating", game.getRating().toString());
                 intent.putExtra("gameRelease", game.getReleased());
-
+                intent.putExtra("gameId", game.getId().toString());
 
                 // Start the GameDetailsActivity
                 context.startActivity(intent);

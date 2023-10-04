@@ -83,6 +83,15 @@ public class GameResult {
     @Expose
     private List<ShortScreenshot> shortScreenshots;
 
+    @SerializedName("data")
+    @Expose
+    private Data data;
+
+    @SerializedName("description_raw")
+    @Expose
+    private String descriptionRaw;
+
+
     public Integer getId() {
         return id;
     }
@@ -271,6 +280,22 @@ public class GameResult {
 
     public void setShortScreenshots(List<ShortScreenshot> shortScreenshots) {
         this.shortScreenshots = shortScreenshots;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public String getDescriptionRaw() {
+        return descriptionRaw;
+    }
+
+    public void setDescriptionRaw(String descriptionRaw) {
+        this.descriptionRaw = descriptionRaw;
     }
 
 }
