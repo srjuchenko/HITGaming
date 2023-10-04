@@ -17,6 +17,8 @@
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         android:outlineAmbientShadowColor="@color/black"
+        android:foreground="?attr/selectableItemBackground"
+
         >
 
         <ImageView
