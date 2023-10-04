@@ -30,4 +30,15 @@ public class RetrofitClass {
         return retrofit.create(GameMovieServiceByID.class);
     }
 
+    public static GameInfoServiceByID getGameInfo() {
+        if (retrofit == null){
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit.create(GameInfoServiceByID.class);
+    }
+
 }
