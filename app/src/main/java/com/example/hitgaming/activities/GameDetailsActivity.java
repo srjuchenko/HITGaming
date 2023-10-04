@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -26,34 +25,33 @@ import com.example.hitgaming.services.FirebaseDB;
 import com.example.hitgaming.services.GameInfoServiceByID;
 import com.example.hitgaming.services.GameMovieServiceByID;
 import com.example.hitgaming.services.RetrofitClass;
+import com.example.hitgaming.utils.Constants;
 import com.example.hitgaming.utils.Credentials;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GameDetailsActivity extends AppCompatActivity {
-
+    // widgets
     private ProgressBar progressBar;
-
-    private String gameId;
     private VideoView videoView;
     private TextView release,name, videoError, description;
     private ImageView img;
     private RatingBar rate;
     private Button shareBtn, favoritesBtn;
-    private FirebaseDB db = FirebaseDB.getInstance();
+    // firebase
+    private final FirebaseDB  db = FirebaseDB.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    String currentUserUID = mAuth.getCurrentUser().getUid();
+    // others
+    String currentUserUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
     private ArrayList<String> favoriteGames;
-
     ArrayList<GameResult> results = new ArrayList<>();
+    private String gameId;
 
 
     @Override
@@ -65,28 +63,26 @@ public class GameDetailsActivity extends AppCompatActivity {
         setListeners();
         getGameDescription();
         getVideoUrl();
-        System.out.println("on create");
     }
 
     private void getGameDescription() {
         GameInfoServiceByID gameInfoServiceByID = RetrofitClass.getGameInfo();
         Call<GameResult> call = gameInfoServiceByID.getInfo(gameId, Credentials.API_KEY);
-
         call.enqueue(new Callback<GameResult>() {
             @Override
-            public void onResponse(Call<GameResult> call, Response<GameResult> response) {
+            public void onResponse(@NonNull Call<GameResult> call, @NonNull Response<GameResult> response) {
                 GameResult gameResult = response.body();
 
                 if (gameResult != null) {
                     description.setText(gameResult.getDescriptionRaw());
                 } else {
-                    description.setText("there is no description");
+                    description.setText(Constants.DESCRIPTION_ERROR);
                 }
             }
 
             @Override
-            public void onFailure(Call<GameResult> call, Throwable t) {
-                System.out.println("errrrrroorororor");
+            public void onFailure(@NonNull Call<GameResult> call, @NonNull Throwable t) {
+                description.setText(Constants.DESCRIPTION_ERROR);
             }
         });
     }
@@ -109,7 +105,7 @@ public class GameDetailsActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<APIResult>() {
             @Override
-            public void onResponse(Call<APIResult> call, Response<APIResult> response) {
+            public void onResponse(@NonNull Call<APIResult> call, @NonNull Response<APIResult> response) {
                 APIResult result = response.body();
                 if (result != null && result.getResults() != null) {
                     results = (ArrayList<GameResult>) result.getResults();
@@ -124,61 +120,37 @@ public class GameDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<APIResult> call, Throwable t) {
+            public void onFailure(@NonNull Call<APIResult> call, @NonNull Throwable t) {
                 showError();
             }
         });
     }
 
-
-
-
-
     private void removeGameFromFavorites() {
         db.removeGameFromFavorites(currentUserUID, name.getText().toString(),
-                new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Game removed from favorites successfully
-                        showToast("the game was removed from the favorites");
-                        favoriteGames.remove(name.getText().toString());
-                        favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
-                    }
+                aVoid -> {
+                    showToast(Constants.REMOVED_FROM_FAVORITES);
+                    favoriteGames.remove(name.getText().toString());
+                    favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
                 },
-                new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        showToast("can't remove the game from favorites");
-                    }
-                }
+                e -> showToast(Constants.REMOVED_FROM_FAVORITES_ERROR)
         );
     }
 
     private void addGameToFavorites() {
         db.addGameToFavorites(currentUserUID, name.getText().toString(),
-                new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Game added to favorites successfully
-                        showToast("the game was added to favorites");
-                        favoriteGames.add(name.getText().toString());
-                        favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
-                    }
+                aVoid -> {
+                    showToast(Constants.ADD_TO_FAVORITES);
+                    favoriteGames.add(name.getText().toString());
+                    favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
                 },
-                new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        showToast("can't add the game to favorites");
-                    }
-                }
+                e -> showToast(Constants.ADD_TO_FAVORITES_ERROR)
         );
     }
 
 
     private void shareGame() {
-        String textToSend = "Hi you have to see the game: " + name.getText() ;
+        String textToSend = Constants.TEXT_TO_SHARE + name.getText();
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, textToSend);
@@ -188,8 +160,6 @@ public class GameDetailsActivity extends AppCompatActivity {
         startActivity(shareIntent);
     }
 
-
-
     private void updateUI() {
         showProgress();
         Intent intent = getIntent();
@@ -198,6 +168,7 @@ public class GameDetailsActivity extends AppCompatActivity {
             String gameImage = intent.getStringExtra("gameImg");
             String gameRating = intent.getStringExtra("gameRating");
             String releaseDate = intent.getStringExtra("gameRelease");
+            releaseDate = release.getText() + " " + releaseDate;
             gameId = intent.getStringExtra("gameId");
 
             name.setText(gameName);
@@ -205,39 +176,28 @@ public class GameDetailsActivity extends AppCompatActivity {
                     .load(gameImage)
                     .into(img);
             rate.setRating(Float.parseFloat(gameRating));
-            release.setText(release.getText() + " " + releaseDate);
+            release.setText(releaseDate);
         }
     }
 
-
-
     private void updateUserFavorites() {
         db.getFavoriteGamesByUID(currentUserUID,
-                new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // User document exists
-                            User user = documentSnapshot.toObject(User.class);
-                            if (user != null) {
-                                favoriteGames = user.getFavoriteGames();
+                documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // User document exists
+                        User user = documentSnapshot.toObject(User.class);
+                        if (user != null) {
+                            favoriteGames = user.getFavoriteGames();
 
-                                if (favoriteGames.contains(name.getText().toString())) {
-                                    favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
-                                } else {
-                                   favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
-                                }
+                            if (favoriteGames.contains(name.getText().toString())) {
+                                favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
+                            } else {
+                               favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
                             }
                         }
                     }
                 },
-                new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        showToast("can't get favorites");
-                    }
-                });
+                e -> showToast(Constants.GET_FAVORITES_ERROR));
     }
 
     private void initFields() {
@@ -255,22 +215,14 @@ public class GameDetailsActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareGame();
-            }
-        });
+        shareBtn.setOnClickListener(v -> shareGame());
 
-        favoritesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (favoriteGames.contains(name.getText().toString())) {
-                    removeGameFromFavorites();
-                } else {
-                    addGameToFavorites();
-                    favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
-                }
+        favoritesBtn.setOnClickListener(v -> {
+            if (favoriteGames.contains(name.getText().toString())) {
+                removeGameFromFavorites();
+            } else {
+                addGameToFavorites();
+                favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
             }
         });
     }

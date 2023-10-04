@@ -1,5 +1,6 @@
 package com.example.hitgaming.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +22,17 @@ import com.example.hitgaming.utils.Credentials;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    // widgets
     private ProgressBar progress;
     private RecyclerView recyclerView;
     private GameAdapter gameAdapter;
     private TextView errorText;
+    // others
     private List<GameResult> gameResultList = new ArrayList<>();
 
     @Override
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<APIResult>() {
             @Override
-            public void onResponse(Call<APIResult> call, Response<APIResult> response) {
+            public void onResponse(@NonNull Call<APIResult> call, @NonNull Response<APIResult> response) {
                 APIResult result = response.body();
                 if (result != null && result.getResults() != null) {
                     gameResultList = (ArrayList<GameResult>) result.getResults();
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<APIResult> call, Throwable t) {
+            public void onFailure(@NonNull Call<APIResult> call, @NonNull Throwable t) {
                 showError();
             }
         });
