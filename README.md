@@ -4,7 +4,7 @@ HIT Gaming is an Android application that allows users to explore and discover v
 
 ## Features
 
-- Register and login to the app.
+- Register and log in to the app.
 - Search for games and view detailed information.
 - Explore game descriptions, trailers, and other details.
 - Show games by genre.
@@ -44,4 +44,12 @@ You can find the documentation for the RAWG API [here](https://rawg.io/apidocs).
 
 ### Game details
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e886339d-458a-4eea-ab63-bdae52945f28)
+
+### Game details with description
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e0705a1a-a050-4c3f-b770-0ead9a3fbcc4)
+
+### Show game by genre
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/f4249f21-4215-43f7-b0de-85d9a080a62d)
+
+
 
