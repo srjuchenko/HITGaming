@@ -41,4 +41,16 @@ public class RetrofitClass {
         return retrofit.create(GameInfoServiceByID.class);
     }
 
+    public static GameDataServiceByQuery getSearchService() {
+        if (retrofit == null){
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit.create(GameDataServiceByQuery.class);
+    }
+
+
 }
