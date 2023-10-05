@@ -52,5 +52,15 @@ public class RetrofitClass {
         return retrofit.create(GameDataServiceByQuery.class);
     }
 
+    public static GameDataServiceByGenre getGenreService() {
+        if (retrofit == null){
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+
+        return retrofit.create(GameDataServiceByGenre.class);
+    }
 
 }

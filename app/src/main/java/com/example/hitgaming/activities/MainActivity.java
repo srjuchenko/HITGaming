@@ -2,14 +2,12 @@ package com.example.hitgaming.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -20,11 +18,11 @@ import com.example.hitgaming.adapters.GameAdapter;
 import com.example.hitgaming.models.APIResult;
 import com.example.hitgaming.models.GameResult;
 import com.example.hitgaming.services.GameDataService;
+import com.example.hitgaming.services.GameDataServiceByGenre;
 import com.example.hitgaming.services.GameDataServiceByQuery;
 import com.example.hitgaming.services.RetrofitClass;
 import com.example.hitgaming.utils.Constants;
 import com.example.hitgaming.utils.Credentials;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
     // widgets
     private ProgressBar progress;
     private RecyclerView recyclerView;
-    private GameAdapter gameAdapter;
     private TextView errorText;
     private SearchView searchView;
     private ImageView hitLogo;
+    private Button actionGenreBtn;
+    private Button sportsGenreBtn;
+    private Button adventureGenreBtn;
+    private Button shooterGenreBtn;
+    private Button rpgGenreBtn;
+    private Button racingGenreBtn;
 
     // others
     private List<GameResult> gameResultList = new ArrayList<>();
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         intiFields();
+        hitLogo.requestFocus();
         showProgressCircle();
         setListeners();
         getGamesFromAPI();
@@ -69,6 +73,50 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        listenGenreBtn(actionGenreBtn, "action");
+        listenGenreBtn(sportsGenreBtn, "sports");
+        listenGenreBtn(adventureGenreBtn, "adventure");
+        listenGenreBtn(rpgGenreBtn, "role-playing-games-rpg");
+        listenGenreBtn(racingGenreBtn, "racing");
+        listenGenreBtn(shooterGenreBtn, "shooter");
+    }
+
+    private void listenGenreBtn(Button actionGenreBtn, String genre) {
+        actionGenreBtn.setOnClickListener(v -> {
+            showProgressCircle();
+            getGamesByGenre(genre);
+        });
+    }
+
+    private void getGamesByGenre(String genre) {
+        GameDataServiceByGenre gameDataServiceByGenre = RetrofitClass.getGenreService();
+        Call<APIResult> call = gameDataServiceByGenre.getResults(Credentials.API_KEY,Constants.PAGE_SIZE,genre);
+
+        call.enqueue(new Callback<APIResult>() {
+            @Override
+            public void onResponse(@NonNull Call<APIResult> call, @NonNull Response<APIResult> response) {
+                APIResult result = response.body();
+                if (result != null && result.getResults() != null) {
+                    gameResultList = result.getResults();
+                    if (gameResultList.size() == 0) {
+                        showError(Constants.GENRE_ERROR);
+                    } else {
+                        viewData();
+                        hideProgressCircle();
+                    }
+
+                } else {
+                    showError(Constants.GENRE_ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<APIResult> call, @NonNull Throwable t) {
+                showError(Constants.API_ERROR);
+            }
+        });
+
     }
 
     private void getGamesBySearchQuery(String query) {
@@ -77,10 +125,10 @@ public class MainActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<APIResult>() {
             @Override
-            public void onResponse(Call<APIResult> call, Response<APIResult> response) {
+            public void onResponse(@NonNull Call<APIResult> call, @NonNull Response<APIResult> response) {
                 APIResult result = response.body();
                 if (result != null && result.getResults() != null) {
-                    gameResultList = (ArrayList<GameResult>) result.getResults();
+                    gameResultList = result.getResults();
                     if (gameResultList.size() == 0) {
                         showError(Constants.SEARCH_ERROR);
                     } else {
@@ -95,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<APIResult> call, Throwable t) {
+            public void onFailure(@NonNull Call<APIResult> call, @NonNull Throwable t) {
                 showError(Constants.API_ERROR);
             }
         });
@@ -115,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<APIResult> call, @NonNull Response<APIResult> response) {
                 APIResult result = response.body();
                 if (result != null && result.getResults() != null) {
-                    gameResultList = (ArrayList<GameResult>) result.getResults();
+                    gameResultList = result.getResults();
                     viewData();
                     hideProgressCircle();
                 } else {
@@ -136,6 +184,12 @@ public class MainActivity extends AppCompatActivity {
         errorText = findViewById(R.id.txt_error);
         searchView = findViewById(R.id.input_search);
         hitLogo = findViewById(R.id.icon_hit);
+        actionGenreBtn = findViewById(R.id.btn_action);
+        sportsGenreBtn = findViewById(R.id.btn_sport);
+        racingGenreBtn = findViewById(R.id.btn_racing);
+        shooterGenreBtn = findViewById(R.id.btn_shooter);
+        rpgGenreBtn = findViewById(R.id.btn_rpg);
+        adventureGenreBtn = findViewById(R.id.btn_adventure);
     }
 
     private void showProgressCircle() {
@@ -160,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void viewData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        gameAdapter = new GameAdapter(this, gameResultList);
+        GameAdapter gameAdapter = new GameAdapter(this, gameResultList);
         recyclerView.setAdapter(gameAdapter);
     }
 

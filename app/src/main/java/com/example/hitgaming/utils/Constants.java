@@ -13,4 +13,5 @@ public class Constants {
     public static final String API_ERROR = "We apologize, but we couldn't retrieve any results from our data source at the moment.";
     public static final String SEARCH_ERROR = "We're sorry, but we couldn't find any results for your search.";
 
+    public static final String GENRE_ERROR = "We're sorry, but we couldn't find any results for this genre.";
 }
