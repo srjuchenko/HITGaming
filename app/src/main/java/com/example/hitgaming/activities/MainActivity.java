@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listenGenreBtn(actionGenreBtn, "action");
-        listenGenreBtn(sportsGenreBtn, "sports");
-        listenGenreBtn(adventureGenreBtn, "adventure");
-        listenGenreBtn(rpgGenreBtn, "role-playing-games-rpg");
-        listenGenreBtn(racingGenreBtn, "racing");
-        listenGenreBtn(shooterGenreBtn, "shooter");
+        listenGenreBtn(actionGenreBtn, Constants.GENRE_ACTION);
+        listenGenreBtn(sportsGenreBtn, Constants.GENRE_SPORTS);
+        listenGenreBtn(adventureGenreBtn, Constants.GENRE_ADVENTURE);
+        listenGenreBtn(rpgGenreBtn, Constants.GENRE_RPG);
+        listenGenreBtn(racingGenreBtn, Constants.GENRE_RACING);
+        listenGenreBtn(shooterGenreBtn, Constants.GENRE_SHOOTER);
     }
 
     private void listenGenreBtn(Button actionGenreBtn, String genre) {
@@ -149,11 +149,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void clearSearchInput() {
-        searchView.setQuery("",false);
-        hitLogo.requestFocus();
-    }
-
     public void getGamesFromAPI() {
         GameDataService gameDataService = RetrofitClass.getService();
         Call<APIResult> call = gameDataService.getResults(Credentials.API_KEY, Constants.PAGE_SIZE);
@@ -211,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
         errorText.setText(msg);
     }
 
+    private void clearSearchInput() {
+        searchView.setQuery("",false);
+        hitLogo.requestFocus();
+    }
 
     private void viewData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -2,7 +2,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -39,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="this is the description this is the descriptionthis is the descriptionthis is the description"/>
+                android:text="this is the description"/>
 
         </LinearLayout>
     </ScrollView>
@@ -79,15 +78,17 @@
             android:id="@+id/btn_share"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/share_svgrepo_com" />
 
         <Button
             android:id="@+id/btn_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/favorites_star_svgrepo_com" />
 

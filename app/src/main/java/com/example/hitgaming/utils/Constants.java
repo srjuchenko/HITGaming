@@ -14,4 +14,12 @@ public class Constants {
     public static final String SEARCH_ERROR = "We're sorry, but we couldn't find any results for your search.";
 
     public static final String GENRE_ERROR = "We're sorry, but we couldn't find any results for this genre.";
+
+    public static final String GENRE_ACTION = "action";
+    public static final String GENRE_SPORTS = "sports";
+    public static final String GENRE_ADVENTURE = "adventure";
+    public static final String GENRE_SHOOTER = "shooter";
+    public static final String GENRE_RPG = "role-playing-games-rpg";
+    public static final String GENRE_RACING = "racing";
+
 }
