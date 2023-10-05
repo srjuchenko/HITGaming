@@ -54,45 +54,81 @@
             <Button
                 android:id="@+id/btn_action"
                 android:text="Action"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn" />
             <Button
                 android:id="@+id/btn_sport"
+                android:text="Sport"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sport"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn"/>
             <Button
                 android:id="@+id/btn_adventure"
+                android:text="adventure"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Adventure"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn"/>
             <Button
                 android:id="@+id/btn_racing"
+                android:text="Racing"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Racing"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn"/>
             <Button
                 android:id="@+id/btn_rpg"
+                android:text="rpg"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RPG"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn"/>
             <Button
                 android:id="@+id/btn_shooter"
+                android:text="shooter"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shooter"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"/>
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn"/>
         </LinearLayout>
     </HorizontalScrollView>
 
