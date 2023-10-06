@@ -127,10 +127,10 @@ public class GameDetailsActivity extends AppCompatActivity {
     }
 
     private void removeGameFromFavorites() {
-        db.removeGameFromFavorites(currentUserUID, name.getText().toString(),
+        db.removeGameFromFavorites(currentUserUID, gameId,
                 aVoid -> {
                     showToast(Constants.REMOVED_FROM_FAVORITES);
-                    favoriteGames.remove(name.getText().toString());
+                    favoriteGames.remove(gameId);
                     favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
                 },
                 e -> showToast(Constants.REMOVED_FROM_FAVORITES_ERROR)
@@ -138,10 +138,10 @@ public class GameDetailsActivity extends AppCompatActivity {
     }
 
     private void addGameToFavorites() {
-        db.addGameToFavorites(currentUserUID, name.getText().toString(),
+        db.addGameToFavorites(currentUserUID, gameId,
                 aVoid -> {
                     showToast(Constants.ADD_TO_FAVORITES);
-                    favoriteGames.add(name.getText().toString());
+                    favoriteGames.add(gameId);
                     favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
                 },
                 e -> showToast(Constants.ADD_TO_FAVORITES_ERROR)
@@ -189,7 +189,7 @@ public class GameDetailsActivity extends AppCompatActivity {
                         if (user != null) {
                             favoriteGames = user.getFavoriteGames();
 
-                            if (favoriteGames.contains(name.getText().toString())) {
+                            if (favoriteGames.contains(gameId)) {
                                 favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com__1_);
                             } else {
                                favoritesBtn.setBackgroundResource(R.drawable.favorites_star_svgrepo_com);
@@ -218,7 +218,7 @@ public class GameDetailsActivity extends AppCompatActivity {
         shareBtn.setOnClickListener(v -> shareGame());
 
         favoritesBtn.setOnClickListener(v -> {
-            if (favoriteGames.contains(name.getText().toString())) {
+            if (favoriteGames.contains(gameId)) {
                 removeGameFromFavorites();
             } else {
                 addGameToFavorites();

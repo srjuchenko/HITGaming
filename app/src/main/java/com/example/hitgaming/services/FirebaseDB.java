@@ -39,20 +39,20 @@ public class FirebaseDB {
                 .addOnFailureListener(onFailureListener);
     }
 
-    public void addGameToFavorites(String uid, String gameName, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+    public void addGameToFavorites(String uid, String gameID, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
         DocumentReference userRef = db.collection("usersDB").document(uid);
 
         // Use FieldValue.arrayUnion to add the gameId to the favorites array
-        userRef.update("favoriteGames", FieldValue.arrayUnion(gameName))
+        userRef.update("favoriteGames", FieldValue.arrayUnion(gameID))
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }
 
-    public void removeGameFromFavorites(String uid, String gameName, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
+    public void removeGameFromFavorites(String uid, String gameID, final OnSuccessListener<Void> onSuccessListener, final OnFailureListener onFailureListener) {
         DocumentReference userRef = db.collection("usersDB").document(uid);
 
         // Use FieldValue.arrayRemove to remove the gameId from the favorites array
-        userRef.update("favoriteGames", FieldValue.arrayRemove(gameName))
+        userRef.update("favoriteGames", FieldValue.arrayRemove(gameID))
                 .addOnSuccessListener(onSuccessListener)
                 .addOnFailureListener(onFailureListener);
     }

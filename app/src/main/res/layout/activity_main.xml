@@ -42,6 +42,7 @@
                 app:cardCornerRadius="8dp">
 
                 <SearchView
+                    android:focusable="false"
                     android:id="@+id/input_search"
                     android:layout_width="match_parent"
                     android:iconifiedByDefault="false"
@@ -50,6 +51,20 @@
                     android:queryHint="Search game ..."
                     android:layout_gravity="center"/>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_show_favorites"
+                android:text="Favorites"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:padding="16dp"
+                android:background="@drawable/custom_btn" />
 
             <Button
                 android:id="@+id/btn_action"
