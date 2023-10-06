@@ -37,20 +37,19 @@ You can find the documentation for the RAWG API [here](https://rawg.io/apidocs).
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/1c65204a-1b2b-4e13-b923-dd70ea68b9bb)
 
 ### Login 
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/02b8f6a7-8554-46fc-bd79-3427b26aebfc)
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/ce850710-47ad-486d-aa03-11e2fed947ac)
 
 ### Games result 
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/2bd08b1d-2b7f-4529-8c76-0bc09681a6bf)
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/c6ab82d4-61b7-4ae7-bf72-15c1f4d1e43e)
 
-### Show game by genre
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/f4249f21-4215-43f7-b0de-85d9a080a62d)
+### Show game by genre or favorites
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/8e2f6763-2b11-4292-a998-6931405a2ab9)
 
 ### Game details
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e886339d-458a-4eea-ab63-bdae52945f28)
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/8dd79bce-f827-46e9-b97a-973aa663449a)
 
 ### Game details with description
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/e0705a1a-a050-4c3f-b770-0ead9a3fbcc4)
-
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/6e260392-4d62-49ab-9097-287caf1612a4)
 
 
 
