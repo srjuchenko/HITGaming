@@ -34,7 +34,7 @@ You can find the documentation for the RAWG API [here](https://rawg.io/apidocs).
 
 ## Screenshots
 ### Splash 
-![image](https://github.com/srjuchenko/HITGaming/assets/76474133/1c65204a-1b2b-4e13-b923-dd70ea68b9bb)
+![image](https://github.com/srjuchenko/HITGaming/assets/76474133/9bc1ea65-269f-46d7-914d-86483bf5968e)
 
 ### Login 
 ![image](https://github.com/srjuchenko/HITGaming/assets/76474133/ce850710-47ad-486d-aa03-11e2fed947ac)
