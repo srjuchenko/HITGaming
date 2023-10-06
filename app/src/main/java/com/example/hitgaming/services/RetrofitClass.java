@@ -30,7 +30,7 @@ public class RetrofitClass {
         return retrofit.create(GameMovieServiceByID.class);
     }
 
-    public static GameInfoServiceByID getGameInfo() {
+    public static GameInfoServiceByID getGameInfoByIDService() {
         if (retrofit == null){
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

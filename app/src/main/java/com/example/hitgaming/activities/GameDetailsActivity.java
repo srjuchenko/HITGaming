@@ -40,17 +40,23 @@ public class GameDetailsActivity extends AppCompatActivity {
     // widgets
     private ProgressBar progressBar;
     private VideoView videoView;
-    private TextView release,name, videoError, description;
+    private TextView release
+                   , name
+                   , videoError
+                   , description;
     private ImageView img;
     private RatingBar rate;
-    private Button shareBtn, favoritesBtn;
+    private Button shareBtn
+                 , favoritesBtn;
+
     // firebase
     private final FirebaseDB  db = FirebaseDB.getInstance();
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     // others
-    String currentUserUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+    private final String  currentUserUID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
     private ArrayList<String> favoriteGames;
-    ArrayList<GameResult> results = new ArrayList<>();
+    private ArrayList<GameResult> results = new ArrayList<>();
     private String gameId;
 
 
@@ -58,15 +64,18 @@ public class GameDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_details);
+
+        // init all fields with the layout IDs
         initFields();
+
         updateUI();
         setListeners();
-        getGameDescription();
+        getAndShowGameDescription();
         getVideoUrl();
     }
 
-    private void getGameDescription() {
-        GameInfoServiceByID gameInfoServiceByID = RetrofitClass.getGameInfo();
+    private void getAndShowGameDescription() {
+        GameInfoServiceByID gameInfoServiceByID = RetrofitClass.getGameInfoByIDService();
         Call<GameResult> call = gameInfoServiceByID.getInfo(gameId, Credentials.API_KEY);
         call.enqueue(new Callback<GameResult>() {
             @Override
@@ -87,17 +96,6 @@ public class GameDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void showVideo(String url) {
-        if (url == null) return;
-        videoView.setVisibility(View.VISIBLE);
-        videoError.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        Uri videoUrl = Uri.parse(url);
-        videoView.setVideoURI(videoUrl);
-        MediaController mediaController = new MediaController(this);
-        videoView.setMediaController(mediaController);
-        mediaController.setAnchorView(videoView);
-    }
 
     private void getVideoUrl() {
         GameMovieServiceByID gameMovieServiceByID = RetrofitClass.getMovieService();
@@ -148,7 +146,6 @@ public class GameDetailsActivity extends AppCompatActivity {
         );
     }
 
-
     private void shareGame() {
         String textToSend = Constants.TEXT_TO_SHARE + name.getText();
         Intent sendIntent = new Intent();
@@ -178,6 +175,18 @@ public class GameDetailsActivity extends AppCompatActivity {
             rate.setRating(Float.parseFloat(gameRating));
             release.setText(releaseDate);
         }
+    }
+
+    private void showVideo(String url) {
+        if (url == null) return;
+        videoView.setVisibility(View.VISIBLE);
+        videoError.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        Uri videoUrl = Uri.parse(url);
+        videoView.setVideoURI(videoUrl);
+        MediaController mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+        mediaController.setAnchorView(videoView);
     }
 
     private void updateUserFavorites() {

@@ -5,13 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import android.os.Bundle;
 import android.view.View;
-
-
 import android.widget.Button;
-
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -48,13 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private SearchView searchView;
 
     private Button actionGenreBtn
-            , sportsGenreBtn
-            , adventureGenreBtn
-            , shooterGenreBtn
-            , rpgGenreBtn
-            , racingGenreBtn
-            , favoritesBtn;
-
+                 , sportsGenreBtn
+                 , adventureGenreBtn
+                 , shooterGenreBtn
+                 , rpgGenreBtn
+                 , racingGenreBtn
+                 , favoritesBtn;
 
     // others
     private List<GameResult> gameResultList = new ArrayList<>();
@@ -63,10 +58,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         intiFields();
-        showProgressCircle();
         setListeners();
-        getGamesFromAPI();
+        showProgressCircle();
+        getAndShowGamesFromAPI();
     }
 
     @Override
@@ -76,13 +73,12 @@ public class MainActivity extends AppCompatActivity {
         searchView.clearFocus();
     }
 
-
     private void setListeners() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 showProgressCircle();
-                getGamesBySearchQuery(query);
+                getAndShowGamesBySearchQuery(query);
                 return true;
             }
 
@@ -104,8 +100,12 @@ public class MainActivity extends AppCompatActivity {
         listenGenreBtn(rpgGenreBtn, Constants.GENRE_RPG);
         listenGenreBtn(racingGenreBtn, Constants.GENRE_RACING);
         listenGenreBtn(shooterGenreBtn, Constants.GENRE_SHOOTER);
-
-
+    }
+    private void listenGenreBtn(Button actionGenreBtn, String genre) {
+        actionGenreBtn.setOnClickListener(v -> {
+            showProgressCircle();
+            getAndShowGamesByGenre(genre);
+        });
     }
 
     private void showFavorites() {
@@ -116,15 +116,15 @@ public class MainActivity extends AppCompatActivity {
         db.getFavoriteGamesByUID(currentUserUID,
                 documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // User document exists
+
                         User user = documentSnapshot.toObject(User.class);
                         if (user != null) {
                             ArrayList<String> favoriteGames = user.getFavoriteGames();
                             if (favoriteGames.size() == 0) {
-                                showError("you don't have favorite games yet");
+                                showError(Constants.SHOW_FAVORITES_ERROR);
                             } else {
                                 for (String id: favoriteGames) {
-                                    getGameById(id);
+                                    getAndShowGameById(id);
                                 }
 
                             }
@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity {
                 e -> showToast(Constants.GET_FAVORITES_ERROR));
     }
 
-    private void getGameById(String gameID) {
-        GameInfoServiceByID gameInfoServiceByID = RetrofitClass.getGameInfo();
+    private void getAndShowGameById(String gameID) {
+        GameInfoServiceByID gameInfoServiceByID = RetrofitClass.getGameInfoByIDService();
         Call<GameResult> call = gameInfoServiceByID.getInfo(gameID, Credentials.API_KEY);
 
         call.enqueue(new Callback<GameResult>() {
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (gameResult != null) {
                     gameResultList.add(gameResult);
-                    viewData();
+                    viewGameResults();
                 }
                 else {
                     showError(Constants.API_ERROR);
@@ -160,14 +160,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void listenGenreBtn(Button actionGenreBtn, String genre) {
-        actionGenreBtn.setOnClickListener(v -> {
-            showProgressCircle();
-            getGamesByGenre(genre);
-        });
-    }
-
-    private void getGamesByGenre(String genre) {
+    private void getAndShowGamesByGenre(String genre) {
         GameDataServiceByGenre gameDataServiceByGenre = RetrofitClass.getGenreService();
         Call<APIResult> call = gameDataServiceByGenre.getResults(Credentials.API_KEY,Constants.PAGE_SIZE,genre);
 
@@ -180,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     if (gameResultList.size() == 0) {
                         showError(Constants.GENRE_ERROR);
                     } else {
-                        viewData();
+                        viewGameResults();
                         hideProgressCircle();
                     }
 
@@ -194,10 +187,9 @@ public class MainActivity extends AppCompatActivity {
                 showError(Constants.API_ERROR);
             }
         });
-
     }
 
-    private void getGamesBySearchQuery(String query) {
+    private void getAndShowGamesBySearchQuery(String query) {
         GameDataServiceByQuery gameDataServiceByQuery = RetrofitClass.getSearchService();
         Call<APIResult> call = gameDataServiceByQuery.getResults(Credentials.API_KEY,Constants.PAGE_SIZE,query);
 
@@ -211,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                         showError(Constants.SEARCH_ERROR);
                         clearSearchInput();
                     } else {
-                        viewData();
+                        viewGameResults();
                         clearSearchInput();
                         hideProgressCircle();
                     }
@@ -229,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getGamesFromAPI() {
+    public void getAndShowGamesFromAPI() {
         GameDataService gameDataService = RetrofitClass.getService();
         Call<APIResult> call = gameDataService.getResults(Credentials.API_KEY, Constants.PAGE_SIZE);
 
@@ -239,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                 APIResult result = response.body();
                 if (result != null && result.getResults() != null) {
                     gameResultList = result.getResults();
-                    viewData();
+                    viewGameResults();
                     hideProgressCircle();
                 } else {
                     showError(Constants.API_ERROR);
@@ -288,10 +280,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearSearchInput() {
         searchView.setQuery("",false);
-
     }
 
-    private void viewData() {
+    private void viewGameResults() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         GameAdapter gameAdapter = new GameAdapter(this, gameResultList);
         recyclerView.setAdapter(gameAdapter);

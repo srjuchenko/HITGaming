@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         this.gameList = gameList;
     }
 
+    @NonNull
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -44,21 +46,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
                 .load(game.getBackgroundImage())
                 .into(holder.gameImageView);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, GameDetailsActivity.class);
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, GameDetailsActivity.class);
 
-                // Pass any relevant data to the GameDetailsActivity using Intent extras
-                intent.putExtra("gameName", game.getName()); // Example: Pass the game ID
-                intent.putExtra("gameImg", game.getBackgroundImage());
-                intent.putExtra("gameRating", game.getRating().toString());
-                intent.putExtra("gameRelease", game.getReleased());
-                intent.putExtra("gameId", game.getId().toString());
+            // Pass any relevant data to the GameDetailsActivity using Intent extras
+            intent.putExtra("gameName", game.getName()); // Example: Pass the game ID
+            intent.putExtra("gameImg", game.getBackgroundImage());
+            intent.putExtra("gameRating", game.getRating().toString());
+            intent.putExtra("gameRelease", game.getReleased());
+            intent.putExtra("gameId", game.getId().toString());
 
-                // Start the GameDetailsActivity
-                context.startActivity(intent);
-            }
+            // Start the GameDetailsActivity
+            context.startActivity(intent);
         });
     }
 
